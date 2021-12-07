@@ -69,7 +69,7 @@ module.exports = class ForestClient extends Client {
       return undefined;
     }
 
-    const l = tree.layers.length - 1;
+    const l = tree.layers.length;
 
     const layer = tree.layers.find((layer, index) => layer.id === messageId && index > -1 && index < l);
 

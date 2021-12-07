@@ -1,8 +1,10 @@
+const admins = require('../../admins.json');
+
 module.exports = {
   name: 'messageCreate',
   once: false,
   async handle(client, message) {
-    if (message.content !== 'tree' && message.author.id !== 204621728004046848) {
+    if (message.content !== 'tree' || !admins.includes(message.author.id)) {
       return;
     }
     

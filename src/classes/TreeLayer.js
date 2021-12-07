@@ -9,9 +9,13 @@ module.exports = class TreeLayer {
   }
 
   addDecoration(emoji) {
-    const l = this.emojis.length;
+    const indices = this.emojis.map((_, i) => i).filter(i => this.emojis[i] !== emoji);
+
+    const l = indices.length;
     
-    this.emojis[randomInt(l)] = emoji;
+    if (l > 0) {
+      this.emojis[indices[randomInt(l)]] = emoji;
+    }
   }
 
   generateMessage() {

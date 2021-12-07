@@ -2,4 +2,5 @@ node_modules/
 .eslintrc.json
 admins.json
 token.json
+tree-config.json
 trees.json

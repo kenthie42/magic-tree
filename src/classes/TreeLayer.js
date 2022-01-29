@@ -25,6 +25,7 @@ module.exports = class TreeLayer {
 
     for (let i = 0; i < l; i++) {
       message += this.emojis[i];
+      message += '‌'; // zero-width non-joiner, to prevent two consecutive emojis combining
     }
 
     return message;

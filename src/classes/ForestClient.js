@@ -1,7 +1,7 @@
+const trees = require('../../trees.json');
 const fsPromises = require('fs/promises');
 const { Client } = require('discord.js');
 const Tree = require('./Tree.js');
-const trees = require('../../trees.json');
 
 module.exports = class ForestClient extends Client {
   constructor(options) {
@@ -11,39 +11,31 @@ module.exports = class ForestClient extends Client {
 
   loadTrees() {
     const l = this.trees.length;
-
     const treePromises = [];
 
     for (let i = 0; i < l; i++) {
-      treePromises.push(this.loadTree(this.trees[i]));
+      treePromises.push(this.loadTree(i));
     }
 
     return Promise.all(treePromises);
   }
 
-  async loadTree(tree) {
+  async loadTree(i) {
+    const tree = this.trees[i];
     const channel = await this.channels.fetch(tree.channelId);
-
     const layers = tree.layers;
-
     const l = layers.length;
 
-    const treeLayerPromises = [];
-
-    for (let i = 0; i < l; i++) {
-      treeLayerPromises.push(channel.messages.fetch(layers[i].id));
-    }
-
-    return Promise.all(treeLayerPromises);
+    return Promise.all([
+      channel.messages.fetch(layers[0].id),
+      channel.messages.fetch({ limit: l - 1, after: layers[0].id })
+    ]);
   }
 
   growTree(channel) {
     const tree = new Tree(channel.id);
-
     this.trees.push(tree);
-
     const l = tree.layers.length;
-
     const treeLayerPromises = [];
 
     for (let i = 0; i < l; i++) {
@@ -70,7 +62,6 @@ module.exports = class ForestClient extends Client {
     }
 
     const l = tree.layers.length;
-
     const layer = tree.layers.find((layer, index) => layer.id === messageId && index > -1 && index < l);
 
     if (!layer) {

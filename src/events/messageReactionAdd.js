@@ -34,5 +34,5 @@ module.exports = {
         client.save();
       })
       .then(() => console.log('File saved.'));
-  },
+  }
 };

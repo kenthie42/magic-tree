@@ -1,5 +1,4 @@
-const treeConfig = require('../../tree-config.json');
-const { leaf, trunk, baseWidth } = treeConfig;
+const { leaf, trunk, baseWidth } = require('../../tree-config.json');
 const TreeLayer = require('./TreeLayer.js');
 
 module.exports = class Tree {

@@ -1,5 +1,4 @@
-const treeConfig = require('../../tree-config.json');
-const { space, baseWidth } = treeConfig;
+const { space, baseWidth } = require('../../tree-config.json');
 const { randomInt } = require('../functions/randomInt.js');
 
 module.exports = class TreeLayer {
@@ -10,22 +9,19 @@ module.exports = class TreeLayer {
 
   addDecoration(emoji) {
     const indices = this.emojis.map((_, i) => i).filter(i => this.emojis[i] !== emoji);
-
     const l = indices.length;
-    
-    if (l > 0) {
-      this.emojis[indices[randomInt(l)]] = emoji;
-    }
+
+    if (l === 0) return;
+    this.emojis[indices[randomInt(l)]] = emoji;
   }
 
   generateMessage() {
     const l = this.emojis.length;
-
     let message = `_${space.repeat(baseWidth - l + 1)}_`;
 
     for (let i = 0; i < l; i++) {
       message += this.emojis[i];
-      message += '‌'; // zero-width non-joiner, to prevent two consecutive emojis combining
+      message += '‌'; // zero-width non-joiner, to prevent two consecutive emojis combining into one
     }
 
     return message;

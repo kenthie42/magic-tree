@@ -2,7 +2,7 @@
 
 🥦 broggoli 🥦
 
-## Set-up
+## Setup
 
 - The bot requires "Manage Messages" permissions (permissions integer 8192) to delete reactions.
 - Update `token.json` with your bot token.

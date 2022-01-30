@@ -4,9 +4,7 @@ module.exports = {
   name: 'messageCreate',
   once: false,
   async handle(client, message) {
-    if (message.content !== 'tree' || !admins.includes(message.author.id)) {
-      return;
-    }
+    if (message.content !== 'tree' || !admins.includes(message.author.id)) return;
     
     console.log(`${message.author.tag} planted a tree!`);
     console.log('Growing tree...');

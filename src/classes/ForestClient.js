@@ -56,24 +56,23 @@ module.exports = class ForestClient extends Client {
 
   findLayer(channelId, messageId) {
     const tree = this.trees.find(tree => tree.channelId === channelId);
-
-    if (!tree) {
-      return undefined;
-    }
+    if (!tree) return null;
 
     const l = tree.layers.length;
     const layer = tree.layers.find((layer, index) => layer.id === messageId && index > -1 && index < l);
-
-    if (!layer) {
-      return undefined;
-    }
-
+    if (!layer) return null;
     return layer;
   }
 
   updateLayer(message, layer, emoji) {
-    layer.addDecoration(emoji);
+    const index = layer.addDecoration(emoji);
+    return Promise.all([
+      this.log(layer.id, index, emoji),
+      message.edit(layer.generateMessage())
+    ]);
+  }
 
-    return message.edit(layer.generateMessage());
+  log(layerId, index, emoji) {
+    return fsPromises.appendFile('events.log', JSON.stringify([layerId, index, emoji]) + '\n');
   }
 };

@@ -11,8 +11,10 @@ module.exports = class TreeLayer {
     const indices = this.emojis.map((_, i) => i).filter(i => this.emojis[i] !== emoji);
     const l = indices.length;
 
-    if (l === 0) return;
-    this.emojis[indices[randomInt(l)]] = emoji;
+    if (l === 0) return null;
+    const k = randomInt(l);
+    this.emojis[indices[k]] = emoji;
+    return k;
   }
 
   generateMessage() {
